@@ -9,7 +9,7 @@ const SideBar = () => {
 	}
 
 	return (
-		<div className="p-4 shadow-md">
+		<div className="p-3 shadow min-h-screen">
 			<>
 				<ul className="mt-2">
 					<li>Home</li>

@@ -32,10 +32,10 @@ const Head = () => {
 			<div>
 				<input
 					type="text"
-					className="border-2 p-1.5 rounded-l-3xl w-[400px] placeholder:text-center"
+					className="border p-1.5 rounded-l-3xl w-[600px] placeholder:text-center"
 					placeholder="Search"
 				/>
-				<button className="font-semibold border-2 rounded-r-3xl px-3 py-1.5 w-23">
+				<button className="font-semibold border rounded-r-3xl px-3 py-1.5 w-23 cursor-pointer active:opacity-30">
 					Search
 				</button>
 			</div>
