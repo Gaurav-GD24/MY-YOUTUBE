@@ -16,3 +16,7 @@ Builds the app for production in the `build` folder.\
 Optimizes the build for best performance.
 
 
+## Screenshot
+
+![YouTube Clone Screenshot](./src/assets/my__Youtube.png)
+
