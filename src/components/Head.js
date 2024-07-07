@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../utils/navSlice";
+import { YOUTUBE_SEARCH_API } from "../utils/constants";
 
 const Head = () => {
+	// here we are creating state variable for search functionality
+	const [searchText, setSearchText] = useState("");
+	const [suggestions, setSuggestions] = useState([]);
+	const [show, setShow] = useState(false);
+
+	// console.log(searchText);
+	// call the the search API
+	useEffect(() => {
+		// we make an API call after 200 milliseconds
+		const timer = setTimeout(() => getSearchData(), 200);
+
+		return () => {
+			clearTimeout(timer);
+		};
+	}, [searchText]);
+
+	const getSearchData = async () => {
+		const data = await fetch(YOUTUBE_SEARCH_API + searchText);
+		const json = await data.json();
+		setSuggestions(json[1]);
+	};
+
 	const dispatch = useDispatch();
 
 	function toggleMenuHandler() {
@@ -16,11 +39,10 @@ const Head = () => {
 					src="https://cdn0.iconfinder.com/data/icons/rounded-basics/24/rounded__menu-512.png"
 					alt="hamburger__Icon"
 					width={35}
-                    className="cursor-pointer"
+					className="cursor-pointer"
 					onClick={() => {
 						toggleMenuHandler();
 					}}
-
 				/>
 				<img
 					src="https://cdn.mos.cms.futurecdn.net/8gzcr6RpGStvZFA2qRt4v6.jpg"
@@ -30,14 +52,36 @@ const Head = () => {
 				/>
 			</div>
 			<div>
-				<input
-					type="text"
-					className="border p-1.5 rounded-l-3xl w-[600px] placeholder:text-center"
-					placeholder="Search"
-				/>
-				<button className="font-semibold border rounded-r-3xl px-3 py-1.5 w-23 cursor-pointer active:opacity-30">
-					Search
-				</button>
+				<div>
+					<input
+						type="text"
+						className="border px-6 py-1.5 rounded-l-3xl w-[600px] placeholder:text-center"
+						placeholder="Search"
+						value={searchText}
+						onChange={(e) => {
+							setSearchText(e.target.value);
+						}}
+						onFocus={() => setShow(true)}
+						onBlur={() => setShow(false)}
+					/>
+					<button className="font-semibold border rounded-r-3xl px-3 py-1.5 w-23 cursor-pointer active:opacity-30">
+						Search
+					</button>
+				</div>
+
+				{show && (
+					<div className="fixed bg-white rounded w-[39%] shadow mt-1">
+						<ul>
+							{suggestions.map((item) => {
+								return (
+									<li className="px-3 py-1 hover:bg-gray-100">
+										{item}
+									</li>
+								);
+							})}
+						</ul>
+					</div>
+				)}
 			</div>
 			<div>
 				<img
